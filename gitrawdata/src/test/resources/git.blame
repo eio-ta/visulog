@@ -1,0 +1,237 @@
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   1) package up.visulog.cli;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   2) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   3) import up.visulog.analyzer.Analyzer;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   4) import up.visulog.config.Configuration;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   5) import up.visulog.config.PluginConfig;
+76753446 (<yoyo031201@orange.fr>                     2020-11-05 17:33:33 +0100   6) import up.visulog.gitrawdata.Commit;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200   7) 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200   8) // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200   9) import java.io.BufferedReader;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  10) 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  11) //a library that allows you to read a File, creates an FileReader 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  12) //A FileReader alone is useless, we need to use it in a BufferedReader
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200  13) import java.io.FileReader;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  14) 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  15) // a library that allows you to write to files
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200  16) import java.io.FileWriter;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  17) 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  18) //When we have a java error when we open a file or write to a file, it creates an IOException
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  19) //So we need to catch it, that's why I use the couple try,catch
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200  20) import java.io.IOException;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  21) 
+85cddd65 (<adegorre@irif.fr>                         2020-09-11 13:31:03 +0200  22) import java.nio.file.FileSystems;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  23) 
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  24) //libraries that allow you to find files thanks to their path
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200  25) import java.nio.file.Path;
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200  26) import java.nio.file.Paths;
+64582fe1 (<yoyo031201@orange.fr>                     2020-10-14 10:33:46 +0200  27) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  28) import java.util.HashMap;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  29) import java.util.Optional;
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200  30) import java.util.Scanner;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  31) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  32) public class CLILauncher {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  33) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  34)     public static void main(String[] args) {
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  35)             var gitPath = FileSystems.getDefault().getPath("../");
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  36)             BufferedReader b = Commit.command(gitPath, "git", "blame", "-e", "cli/src/main/java/up/visulog/cli/CLILauncher.java");
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  37)             String line;
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  38)             try {
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  39)                     while((line = b.readLine()) != null) {
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  40)                             System.out.println(line);
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  41)                     }
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  42)             } catch (IOException e) {
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  43)                     // TODO Auto-generated catch block
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  44)                     e.printStackTrace();
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  45)             }
+00000000 (<not.committed.yet>                        2020-11-06 17:39:37 +0100  46)             
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  47)         var config = makeConfigFromCommandLineArgs(args);
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  48)         if (config.isPresent()) {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  49)             var analyzer = new Analyzer(config.get());
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  50)             var results = analyzer.computeResults();
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  51)             System.out.println(results.toHTML());
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  52)         } else displayHelpAndExit();
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  53)     }
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  54) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  55)     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
+76753446 (<yoyo031201@orange.fr>                     2020-11-05 17:33:33 +0100  56)         var gitPath = FileSystems.getDefault().getPath("../");
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  57)         var plugins = new HashMap<String, PluginConfig>();
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200  58)         String pPrivateToken = "";
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200  59)         int pProjectId = -1;
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200  60)         boolean API = false;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  61)         for (var arg : args) {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  62)             if (arg.startsWith("--")) {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  63)                 String[] parts = arg.split("=");
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  64)                 if (parts.length != 2) return Optional.empty();
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  65)                 else {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  66)                     String pName = parts[0];
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  67)                     String pValue = parts[1];
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  68)                     switch (pName) {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  69)                         case "--addPlugin":
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200  70)                             switch(pValue) {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  71)                             // TODO: parse argument and make an instance of PluginConfig
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  72) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200  73)                             // Let's just trivially do this, before the TODO is fixed:
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100  74)                             
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100  75)                                 case "countCommits":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  76)                                             plugins.put("countCommits", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  77)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  78)                                     case "countMergeCommits":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  79)                                             plugins.put("countMergeCommits", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  80)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  81)                                     case "countComments":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  82)                                             plugins.put("countComments", new PluginConfig() {});
+c91139ea (<elodytang@hotmail.fr>                     2020-10-30 15:26:31 +0100  83)                                             API = true;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  84)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  85)                                     case "getMembers":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  86)                                             plugins.put("getMembers", new PluginConfig() {});
+c91139ea (<elodytang@hotmail.fr>                     2020-10-30 15:26:31 +0100  87)                                             API = true;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  88)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  89)                                     case "countCommitsPerMonths":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  90)                                             plugins.put("countCommitsPerMonths", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  91)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  92)                                     case "countCommitsPerWeeks":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  93)                                             plugins.put("countCommitsPerWeeks", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  94)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  95)                                     case "countCommitsPerDays":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  96)                                             plugins.put("countCommitsPerDays", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  97)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  98)                                     case "countIssues":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100  99)                                             plugins.put("countIssues", new PluginConfig() {});
+c91139ea (<elodytang@hotmail.fr>                     2020-10-30 15:26:31 +0100 100)                                             API = true;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 101)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 102)                                     case "countLinesDeleted":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 103)                                             plugins.put("countLinesDeleted", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 104)                                             break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 105)                                     case "countLinesAdded":
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 106)                                             plugins.put("countLinesAdded", new PluginConfig() {});
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 107)                                             break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 108)                                     case "countLinesAddedPerDays":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 109)                                          plugins.put("countLinesAddedPerDays", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 110)                                          break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 111)                                     case "countLinesAddedPerWeeks":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 112)                                          plugins.put("countLinesAddedPerWeeks", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 113)                                          break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 114)                                     case "countLinesAddedPerMonths":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 115)                                          plugins.put("countLinesAddedPerMonths", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 116)                                          break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 117)                                     case "countLinesDeletedPerDays":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 118)                                          plugins.put("countLinesDeletedPerDays", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 119)                                          break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 120)                                     case "countLinesDeletedPerWeeks":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 121)                                          plugins.put("countLinesDeletedPerWeeks", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 122)                                          break;
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 123)                                     case "countLinesDeletedPerMonths":
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 124)                                          plugins.put("countLinesDeletedPerMonths", new PluginConfig() {});
+e1f7e413 (<yoyo031201@orange.fr>                     2020-11-04 10:32:25 +0100 125)                                          break;
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 126)                             }
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 127)                             break;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 128)                         case "--loadConfigFile":
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 129)                             // TODO (load options from a file)
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 130)                             break;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 131)                         case "--justSaveConfigFile":
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 132)                             // TODO (save command line options to a file instead of running the analysis)
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 133)                             break;
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 134)                         case "--load":
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 135)                             //Format command: --load=name of the config
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 136)                             //Example: ./gradlew run --args='--load=test'
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 137)                             //this command loads the command "test" that is in ../config.txt
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 138)                             return makeConfigFromCommandLineArgs(loadConfig(pValue));
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 139)                             
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 140)                         case "--save":
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 141)                             //Format command: --save=name of the config
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 142)                             //Example: ./gradlew run --args='--addPlugin=countCommits --save=test'
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 143)                             //this command saves "--addPlugin=countCommits" in ../config.txt
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 144)                             String command = saveConfig(args,pValue);
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 145)                             System.out.println("Command: " + command + ", is saved");
+1b6c3af8 (<elodytang@hotmail.fr>                     2020-10-30 15:20:43 +0100 146)                             System.exit(0); 
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 147)                         case "--privateToken":
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 148)                             pPrivateToken = pValue;
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 149)                             break;
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 150)                         case "--projectId":
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 151)                             pProjectId = Integer.parseInt(pValue);
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 152)                             break;
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 153)                         default:
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 154)                             return Optional.empty();
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 155)                     }
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 156)                 }
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 157)             } else {
+85cddd65 (<adegorre@irif.fr>                         2020-09-11 13:31:03 +0200 158)                 gitPath = FileSystems.getDefault().getPath(arg);
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 159)             }
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 160)         }
+c8f3fdea (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-26 21:13:01 +0100 161)         if(API && (pProjectId==-1 || pPrivateToken.equals(""))){
+c8f3fdea (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-26 21:13:01 +0100 162)             return Optional.empty();
+c8f3fdea (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-26 21:13:01 +0100 163)         }
+c9c99e15 (<ismail.badaoui@etu.univ-paris-diderot.fr> 2020-10-16 22:33:30 +0200 164)         return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 165)     }
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 166)     
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 167)     //this function save the command in the file whose path is "path"
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 168)     private static String saveConfig(String[] args, String name) {
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 169)             String content = "";
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 170)             for(int i = 0; i < args.length; i++) {
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 171)                     if(!args[i].equals("--save=" + name)) content += args[i] + " ";
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 172)             }
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 173)             if(content.length() != 0) {
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 174)                     content = content.substring(0, content.length() - 1);
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 175)             }
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 176)             try {
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 177)                     BufferedReader reader = new BufferedReader(new FileReader("../config.txt"));
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 178)                     String line;
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 179)                     String oldContent = "";
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 180)                     while((line = reader.readLine()) != null) {
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 181)                             Scanner sc = new Scanner(line);
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 182)                             if(sc.hasNext()) {
+618d3d2b (<julescherion@yahoo.fr>                    2020-10-22 16:05:35 +0200 183)                                     String n = sc.next();
+618d3d2b (<julescherion@yahoo.fr>                    2020-10-22 16:05:35 +0200 184)                                     if(!n.equals(name)) {
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 185)                                             oldContent += line + "\n";
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 186)                                     }
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 187)                                     else System.out.println("Warning! old configuation :" + name + " overwitted!");
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 188)                             }
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 189)                             sc.close();
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 190)                     }
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 191)                     FileWriter file = new FileWriter("../config.txt");
+831bfc7a (<yoyo031201@orange.fr>                     2020-10-22 10:29:11 +0200 192)                     file.write(oldContent + name + " " + content + "\n");
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 193)                     file.close();
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 194)                     return content;
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 195)             } catch(IOException e) {
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 196)                     throw new RuntimeException("Error SaveConfig", e);
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 197)             }
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 198)     }
+90b0b92e (<yoyo031201@orange.fr>                     2020-10-12 13:19:42 +0200 199)     
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 200)     private static String[] loadConfig(String name) {
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 201)             try {
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 202)                     BufferedReader reader = new BufferedReader(new FileReader(Paths.get("../config.txt").toFile()));
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 203)                     String line;
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 204)                     while((line = reader.readLine()) != null) {
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 205)                             Scanner sc = new Scanner(line);
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 206)                             if(sc.hasNext() && sc.next().equals(name)) {
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 207)                                     sc.close();
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 208)                                     break;
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 209)                             }
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 210)                             sc.close();
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 211)                     }
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 212)                     if(line == null) {
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 213)                             //error message
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 214)                             System.out.println("Config not found, you should save it first using: \n./gradlew run --args=' Your command --save="+name+"'");
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 215)                             String [] fill= {"--"};
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 216)                             return fill;
+9ddd80a4 (<julescherion@yahoo.fr>                    2020-10-22 16:40:24 +0200 217)                     }
+bc419d5e (<yoyo031201@orange.fr>                     2020-10-21 15:10:16 +0200 218)                     line = line.substring(name.length() + 1);
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 219)                     String[]args = line.split(" ");
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 220)                     return args;
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 221)             }catch(IOException e) {
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 222)                     throw new RuntimeException("Error loadConfig",e);
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 223)             }
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 224)     }
+dbed6f88 (<yoyo031201@orange.fr>                     2020-10-12 17:08:56 +0200 225)     
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 226) 
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 227)     private static void displayHelpAndExit() {
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 228)         System.out.println("Wrong command...");
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 229)         //TODO: print the list of options and their syntax
+a81d127d (<etienne.nedjai@laposte.net>               2020-10-19 17:32:39 +0200 230)         System.out.println("Different options: ");
+a81d127d (<etienne.nedjai@laposte.net>               2020-10-19 17:32:39 +0200 231)         System.out.println("--addPlugin allows you to add new plugins");
+a81d127d (<etienne.nedjai@laposte.net>               2020-10-19 17:32:39 +0200 232)         System.out.println("--loadConfigFile allows you to load options from a file");
+a81d127d (<etienne.nedjai@laposte.net>               2020-10-19 17:32:39 +0200 233)         System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 234)         System.exit(0);
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 235)     }
+8f836af1 (<adegorre@irif.fr>                         2020-09-09 15:11:35 +0200 236) }
+

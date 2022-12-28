@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Prototype</title>
+        <script src="chartsMin.js"></script>
+        <script src="chartGen.js"></script>
+    </head>
+    <body>
+        <script>
+            var labels = ["Week 34 (2020)", "Week 36 (2020)", "Week 38 (2020)", "Week 39 (2020)", "Week 40 (2020)", "Week 41 (2020)", "Week 42 (2020)", "Week 43 (2020)", "Week 44 (2020)"];
+            var data = [52, 965, 541, 267, 323, 1052, 604, 309, 501];
+            genChart("line", "Number of lines", labels, data);
+
+
+            var labels = ["Alexandre LEYMARIE", "ROUGEOLLE yoan", "cherion", "nejdai", "zhangxxu", "Aldric Degorre", "Colin Gonzalez", "Elody", "Victor Spehar", "Ismail BADAOUI", "root"]
+            var data = [6, 33, 12, 5, 4, 13, 1, 46, 4, 3, 1];
+            genChart("bar", "Number of commits", labels, data);
+
+            genChart("pie", "Number of commits", labels, data);
+        </script>
+        <script>
+            var labels = ["2018", "2019", "2020"];
+            var datasets = [["Author 1", [40, 60, 10]], ["Author 2",[90, 20, 50]], ["Author 3", [30, 60, 50]]];
+            genChart2("Title", labels, datasets);
+        </script>
+    </body>
+</html>

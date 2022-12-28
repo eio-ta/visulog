@@ -1,0 +1,24 @@
+.members {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.members th {
+    background-color: #ffffff;
+    border: solid 1px #000000;
+    color: #000000;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.members td {
+    border: solid 1px #000000;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+.members a{
+    text-decoration: none;
+    color: #5b76c5;
+}
